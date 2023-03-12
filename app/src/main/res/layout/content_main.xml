@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <TextView
+        android:id="@+id/topTimer"
+        android:layout_width="356dp"
+        android:layout_height="94dp"
+        android:layout_marginTop="28dp"
+        android:gravity="center"
+        android:onClick="topPlayerStart"
+        android:rotation="180"
+        android:text="Click to Start"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="48sp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/bottomTimer"
+        android:layout_width="360dp"
+        android:layout_height="82dp"
+        android:layout_marginBottom="28dp"
+        android:gravity="center"
+        android:onClick="bottomPlayerStart"
+        android:text="Click To Start"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="48sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/turnChangeButton"
+        android:layout_width="116dp"
+        android:layout_height="58dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="249dp"
+        android:onClick="turnChange"
+        android:text="Turn Change"
+        android:enabled="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topTimer" />
+
+    <Button
+        android:id="@+id/priorityChangeButton"
+        android:layout_width="123dp"
+        android:layout_height="58dp"
+        android:onClick="priorityChange"
+        android:text="Priority Change"
+        android:enabled="false"
+        app:layout_constraintBottom_toTopOf="@+id/bottomTimer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.897"
+        app:layout_constraintStart_toEndOf="@+id/turnChangeButton"
+        app:layout_constraintTop_toBottomOf="@+id/topTimer"
+        app:layout_constraintVertical_bias="0.533" />
+
+    <TextView
+        android:id="@+id/topTurnIndicator"
+        android:layout_width="38dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="155dp"
+        android:layout_marginBottom="16dp"
+        android:text="^"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="48sp"
+        app:layout_constraintBottom_toTopOf="@+id/turnChangeButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.171"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topTimer"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/bottomTurnIndicator"
+        android:layout_width="38dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="132dp"
+        android:rotation="180"
+        android:text="^"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="48sp"
+        app:layout_constraintBottom_toTopOf="@+id/bottomTimer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.123"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/turnChangeButton"
+        app:layout_constraintVertical_bias="0.0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
