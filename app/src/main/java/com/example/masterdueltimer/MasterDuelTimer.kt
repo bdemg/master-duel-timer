@@ -1,5 +1,6 @@
 package com.example.masterdueltimer
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +8,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import com.example.masterdueltimer.databinding.ActivityMainBinding
 import com.example.masterdueltimer.model.PlayerTimer
@@ -19,6 +21,7 @@ class MasterDuelTimer : AppCompatActivity() {
     private var onTurnPlayer: PlayerTimer? = null
     private val initialTime:Long = 300
     private var hasGameStarted = false
+    private var isGamePaused = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +30,10 @@ class MasterDuelTimer : AppCompatActivity() {
         setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
+
+        val playPauseButton = this.findViewById<ImageButton>(R.id.playPauseButton)
+        playPauseButton.isEnabled = false
+        playPauseButton.isClickable = false
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -47,6 +54,18 @@ class MasterDuelTimer : AppCompatActivity() {
 
     private fun setButtonEnabledStatus(isEnabled: Boolean){
 
+        this.setTurnAndPriorityButtonStatus(isEnabled)
+        val playPauseButton = this.findViewById<ImageButton>(R.id.playPauseButton)
+        playPauseButton.isEnabled = isEnabled
+        playPauseButton.isClickable = isEnabled
+        if(isEnabled){
+            playPauseButton.setBackgroundColor(this.resources.getColor(R.color.purple_200))
+        } else {
+            playPauseButton.background = null
+        }
+    }
+
+    private fun setTurnAndPriorityButtonStatus(isEnabled: Boolean){
         this.findViewById<Button>(R.id.turnChangeButton).isEnabled = isEnabled
         this.findViewById<Button>(R.id.priorityChangeButton).isEnabled = isEnabled
     }
@@ -108,5 +127,17 @@ class MasterDuelTimer : AppCompatActivity() {
         currentPlayerTimer!!.turnIndicator.setTextColor(Color.LTGRAY)
         standbyPlayerTimer!!.turnIndicator.setTextColor(Color.CYAN)
         priorityChange(view)
+    }
+
+    fun playPauseDuel(view: View){
+        if(!isGamePaused){
+            currentPlayerTimer!!.pauseTimer()
+            this.setTurnAndPriorityButtonStatus(false)
+            this.isGamePaused = true
+        } else {
+            currentPlayerTimer!!.startTimer()
+            this.setTurnAndPriorityButtonStatus(true)
+            this.isGamePaused = false
+        }
     }
 }
