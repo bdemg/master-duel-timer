@@ -14,7 +14,7 @@
         android:gravity="center"
         android:onClick="topPlayerStart"
         android:rotation="180"
-        android:text="Click to Start"
+        android:text="@string/standbyTimerText"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="48sp"
 
@@ -30,7 +30,7 @@
         android:layout_marginBottom="28dp"
         android:gravity="center"
         android:onClick="bottomPlayerStart"
-        android:text="Click To Start"
+        android:text="@string/standbyTimerText"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="48sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -54,15 +54,16 @@
         android:id="@+id/priorityChangeButton"
         android:layout_width="123dp"
         android:layout_height="58dp"
+        android:layout_marginTop="16dp"
+        android:enabled="false"
         android:onClick="priorityChange"
         android:text="Priority Change"
-        android:enabled="false"
         app:layout_constraintBottom_toTopOf="@+id/bottomTimer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.897"
         app:layout_constraintStart_toEndOf="@+id/turnChangeButton"
-        app:layout_constraintTop_toBottomOf="@+id/topTimer"
-        app:layout_constraintVertical_bias="0.533" />
+        app:layout_constraintTop_toBottomOf="@+id/topTurnIndicator"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/topTurnIndicator"
