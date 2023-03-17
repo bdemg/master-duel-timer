@@ -1,3 +1,2 @@
-1- Reset game functionality
 2- Landscape mode
 3- Parameter config
