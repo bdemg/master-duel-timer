@@ -1,17 +1,20 @@
 package com.example.masterdueltimer
 
-import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.graphics.Color
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.masterdueltimer.databinding.ActivityMainBinding
 import com.example.masterdueltimer.model.PlayerTimer
+
 
 class MasterDuelTimer : AppCompatActivity() {
 
@@ -153,16 +156,29 @@ class MasterDuelTimer : AppCompatActivity() {
 
         currentPlayerTimer!!.pauseTimer()
 
-        currentPlayerTimer!!.turnIndicator.setTextColor(Color.LTGRAY)
-        currentPlayerTimer!!.timerView.setTextColor(Color.LTGRAY)
-        standbyPlayerTimer!!.turnIndicator.setTextColor(Color.LTGRAY)
-        standbyPlayerTimer!!.timerView.setTextColor(Color.LTGRAY)
+        AlertDialog.Builder(this)
+            .setTitle("Restart Duel")
+            .setMessage("Do you want to restart the duel timers?")
+            .setIcon(android.R.drawable.ic_dialog_alert)
 
-        currentPlayerTimer!!.timerView.setText(R.string.standbyTimerText)
-        standbyPlayerTimer!!.timerView.setText(R.string.standbyTimerText)
+            .setPositiveButton(android.R.string.yes, DialogInterface.OnClickListener { dialog, id ->
 
-        this.isGamePaused = false
-        this.hasGameStarted = false
-        this.setButtonEnabledStatus(false)
+                    currentPlayerTimer!!.turnIndicator.setTextColor(Color.LTGRAY)
+                    currentPlayerTimer!!.timerView.setTextColor(Color.LTGRAY)
+                    standbyPlayerTimer!!.turnIndicator.setTextColor(Color.LTGRAY)
+                    standbyPlayerTimer!!.timerView.setTextColor(Color.LTGRAY)
+
+                    currentPlayerTimer!!.timerView.setText(R.string.standbyTimerText)
+                    standbyPlayerTimer!!.timerView.setText(R.string.standbyTimerText)
+
+                    isGamePaused = false
+                    hasGameStarted = false
+                    setButtonEnabledStatus(false)
+                })
+            .setNegativeButton(android.R.string.no, DialogInterface.OnClickListener { dialog, id ->
+
+                    currentPlayerTimer!!.startTimer()
+                })
+            .show()
     }
 }
