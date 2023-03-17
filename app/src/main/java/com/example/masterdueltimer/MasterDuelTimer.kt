@@ -34,6 +34,9 @@ class MasterDuelTimer : AppCompatActivity() {
         val playPauseButton = this.findViewById<ImageButton>(R.id.playPauseButton)
         playPauseButton.isEnabled = false
         playPauseButton.isClickable = false
+        val resetButton = this.findViewById<ImageButton>(R.id.resetGameButton)
+        resetButton.isEnabled = false
+        resetButton.isClickable = false
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -58,10 +61,15 @@ class MasterDuelTimer : AppCompatActivity() {
         val playPauseButton = this.findViewById<ImageButton>(R.id.playPauseButton)
         playPauseButton.isEnabled = isEnabled
         playPauseButton.isClickable = isEnabled
+        val resetButton = this.findViewById<ImageButton>(R.id.resetGameButton)
+        resetButton.isEnabled = isEnabled
+        resetButton.isClickable = isEnabled
         if(isEnabled){
             playPauseButton.setBackgroundColor(this.resources.getColor(R.color.purple_200))
+            resetButton.setBackgroundColor(this.resources.getColor(R.color.purple_200))
         } else {
             playPauseButton.background = null
+            resetButton.background = null
         }
     }
 
@@ -139,5 +147,22 @@ class MasterDuelTimer : AppCompatActivity() {
             this.setTurnAndPriorityButtonStatus(true)
             this.isGamePaused = false
         }
+    }
+
+    fun resetDuel(view: View){
+
+        currentPlayerTimer!!.pauseTimer()
+
+        currentPlayerTimer!!.turnIndicator.setTextColor(Color.LTGRAY)
+        currentPlayerTimer!!.timerView.setTextColor(Color.LTGRAY)
+        standbyPlayerTimer!!.turnIndicator.setTextColor(Color.LTGRAY)
+        standbyPlayerTimer!!.timerView.setTextColor(Color.LTGRAY)
+
+        currentPlayerTimer!!.timerView.setText(R.string.standbyTimerText)
+        standbyPlayerTimer!!.timerView.setText(R.string.standbyTimerText)
+
+        this.isGamePaused = false
+        this.hasGameStarted = false
+        this.setButtonEnabledStatus(false)
     }
 }
