@@ -2,6 +2,8 @@ package com.example.masterdueltimer
 
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
@@ -10,8 +12,9 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.preference.PreferenceManager
 import com.example.masterdueltimer.databinding.ActivityMainBinding
 import com.example.masterdueltimer.model.PlayerTimer
 
@@ -22,7 +25,8 @@ class MasterDuelTimer : AppCompatActivity() {
     private var currentPlayerTimer: PlayerTimer? = null
     private var standbyPlayerTimer: PlayerTimer? = null
     private var onTurnPlayer: PlayerTimer? = null
-    private val initialTime:Long = 300
+    private lateinit var sharedPreferences:SharedPreferences
+
     private var hasGameStarted = false
     private var isGamePaused = false
 
@@ -33,6 +37,15 @@ class MasterDuelTimer : AppCompatActivity() {
         setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
+        binding.toolbar.setOnMenuItemClickListener(Toolbar.OnMenuItemClickListener { item ->
+            if(item.itemId == R.id.action_settings){
+                val intent = Intent(this, DuelSettings::class.java)
+                startActivity(intent)
+            }
+            true
+        })
+
+        this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 
         val playPauseButton = this.findViewById<ImageButton>(R.id.playPauseButton)
         playPauseButton.isEnabled = false
@@ -82,6 +95,7 @@ class MasterDuelTimer : AppCompatActivity() {
     }
 
     fun topPlayerStart(timerView: View){
+        val initialTime = this.sharedPreferences.getString("maxTime", "300")!!.toLong()
         if(!hasGameStarted){
             currentPlayerTimer = PlayerTimer(initialTime, timerView as TextView, this.findViewById(R.id.topTurnIndicator))
             standbyPlayerTimer = PlayerTimer(initialTime, this.findViewById(R.id.bottomTimer), this.findViewById(R.id.bottomTurnIndicator))
@@ -95,6 +109,7 @@ class MasterDuelTimer : AppCompatActivity() {
     }
 
     fun bottomPlayerStart(timerView: View){
+        val initialTime = this.sharedPreferences.getString("maxTime", "300")!!.toLong()
         if(!hasGameStarted){
             currentPlayerTimer = PlayerTimer(initialTime, timerView as TextView, this.findViewById(R.id.bottomTurnIndicator))
             standbyPlayerTimer = PlayerTimer(initialTime, this.findViewById(R.id.topTimer), this.findViewById(R.id.topTurnIndicator))
@@ -117,21 +132,25 @@ class MasterDuelTimer : AppCompatActivity() {
     }
 
     fun turnChange(view: View){
+        val maxTime = this.sharedPreferences.getString("maxTime", "300")!!.toLong()
+        val turnEndGain = this.sharedPreferences.getString("turnEndGain", "30")!!.toLong()
+        val turnStartGain = this.sharedPreferences.getString("turnStartGain", "60")!!.toLong()
+
         // make sure that the current player is the turn player
         if(currentPlayerTimer!! != onTurnPlayer){
             this.priorityChange(view)
         }
 
         currentPlayerTimer!!.pauseTimer()
-        currentPlayerTimer!!.remainingTime = currentPlayerTimer!!.remainingTime + 30
-        if(currentPlayerTimer!!.remainingTime > initialTime) {
-            currentPlayerTimer!!.remainingTime = initialTime
+        currentPlayerTimer!!.remainingTime = currentPlayerTimer!!.remainingTime + turnEndGain
+        if(currentPlayerTimer!!.remainingTime > maxTime) {
+            currentPlayerTimer!!.remainingTime = maxTime
         }
         currentPlayerTimer!!.timerView.text = currentPlayerTimer!!.remainingTime.toString()
 
-        standbyPlayerTimer!!.remainingTime = standbyPlayerTimer!!.remainingTime + 60
-        if(standbyPlayerTimer!!.remainingTime > initialTime){
-            standbyPlayerTimer!!.remainingTime = initialTime
+        standbyPlayerTimer!!.remainingTime = standbyPlayerTimer!!.remainingTime + turnStartGain
+        if(standbyPlayerTimer!!.remainingTime > maxTime){
+            standbyPlayerTimer!!.remainingTime = maxTime
         }
 
         onTurnPlayer = standbyPlayerTimer

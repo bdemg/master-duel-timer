@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <EditTextPreference
+        app:key="maxTime"
+        app:title="Timer Max"
+        app:summary="Maximum available time and starting time for a duel"
+        android:inputType="number"
+        android:digits="0123456789"
+        android:defaultValue="300"
+        />
+
+    <EditTextPreference
+        app:key="turnEndGain"
+        app:title="End Turn Time Gain"
+        app:summary="Time gained when ending a turn"
+        android:inputType="number"
+        android:digits="0123456789"
+        android:defaultValue="30"
+        />
+
+    <EditTextPreference
+        app:key="turnStartGain"
+        app:title="Start Turn Time Gain"
+        app:summary="Time gained when starting a turn"
+        android:inputType="number"
+        android:digits="0123456789"
+        android:defaultValue="60"
+        />
+</PreferenceScreen>
