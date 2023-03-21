@@ -22,6 +22,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".DuelSettings"
+            android:label="Settings"
+            android:exported="true"
+            android:theme="@style/Theme.MasterDuelTimer.NoActionBar"/>
     </application>
 
 </manifest>
